@@ -1,7 +1,7 @@
 class Solution {
 public:
     int singleNumber(vector<int>& a) {
-        sort(a.begin(),a.end());
+        // sort(a.begin(),a.end());
         int n = a.size();
         int k = 0;
 
