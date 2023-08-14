@@ -73,24 +73,16 @@ public:
 
         if(ptr1->val < ptr2->val)
         {
-            if(ptr1->next == NULL)
-            {
-                ptr1->next = ptr2;
-                return ptr1;
-            }
-            ans = solve(ptr1,ptr2);
-            return ans;
+            swap(ptr1,ptr2);
         }
-        else
+        
+        if(ptr2->next == NULL)
         {
-            if(ptr2->next == NULL)
-            {
-                ptr2->next = ptr1;
-                return ptr2;
-            }
-            ans = solve(ptr2,ptr1);
-            return ans;
+            ptr2->next = ptr1;
+            return ptr2;
         }
+        ans = solve(ptr2,ptr1);
+        return ans;
         
     }
 };
