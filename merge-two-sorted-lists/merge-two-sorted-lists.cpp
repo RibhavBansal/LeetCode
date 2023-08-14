@@ -57,31 +57,18 @@ public:
         {
             return ptr1;
         }
-        // else if(ptr1->next == NULL && ptr2->next == NULL)
-        // {
-        //     if(ptr1->val >= ptr2->val)
-        //     {
-        //         ptr2->next = ptr1;
-        //         return ptr2;
-        //     }
-        //     else
-        //     {
-        //         ptr1->next = ptr2;
-        //         return ptr1;
-        //     }
-        // }
-
-        if(ptr1->val < ptr2->val)
+        
+        if(ptr1->val > ptr2->val)
         {
             swap(ptr1,ptr2);
         }
         
-        if(ptr2->next == NULL)
+        if(ptr1->next == NULL)
         {
-            ptr2->next = ptr1;
-            return ptr2;
+            ptr1->next = ptr2;
+            return ptr1;
         }
-        ans = solve(ptr2,ptr1);
+        ans = solve(ptr1,ptr2); 
         return ans;
         
     }
