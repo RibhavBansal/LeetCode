@@ -1,37 +1,61 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
 class Solution {
 public:
-    struct Compare {
-        bool operator()(const ListNode* a, const ListNode* b) {
-            return a->val > b->val;
-        }
-    };
-
-    ListNode* mergeKLists(vector<ListNode*>& lists) {
-        if(lists.size() == 0)
-        return NULL;
-
-        ListNode* dummy = new ListNode(0);
-        ListNode* d = dummy;
-
-        int n = lists.size();
-        priority_queue<ListNode*,vector<ListNode*>,Compare>pq;
+    ListNode* merge(ListNode* a, ListNode* b){
+        ListNode* dummy = new ListNode(0);        
+        ListNode* k = dummy;
         
-        for(int i = 0; i < n; i++){
-            if(lists[i] != NULL)
-            pq.push(lists[i]);
-        }
-
-        while(!pq.empty()){
-            auto it = pq.top();
-            pq.pop();
-            dummy->next = new ListNode(it->val);
-            dummy = dummy->next;
-
-            if(it->next){
-                pq.push(it->next);
+        while(a && b){
+            if(a->val < b->val){
+                ListNode* c = a->next;
+                dummy->next = a;
+                a->next = NULL;
+                a = c;
             }
+            else{
+                ListNode* c = b->next;
+                dummy->next = b;
+                b->next = NULL;
+                b = c;
+            }
+            dummy = dummy->next;
         }
-
-        return d->next;
+        
+        while(a){
+            ListNode* c = a->next;
+            dummy->next = a;
+            a->next = NULL;
+            a = c;
+            dummy = dummy->next;
+        }
+        
+        while(b){
+            ListNode* c = b->next;
+            dummy->next = b;
+            b->next = NULL;
+            b = c;
+            dummy = dummy->next;
+        }
+        
+        return k->next;
+    }
+    
+    ListNode* mergeKLists(vector<ListNode*>& a) {
+        int n = a.size();
+        if(n == 0)return NULL;
+        for(int i = n-2; i >= 0; i--){
+            a[i] = merge(a[i],a[i+1]);
+        }
+        
+        return a[0];
     }
 };
